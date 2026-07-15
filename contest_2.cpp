@@ -7,7 +7,7 @@ void solve()
     int n;
     cin >> n;
 
-    vector<int> a(n);
+    vector<long long> a(n);
 
     for (int i = 0; i < n; i++)
     {
@@ -16,7 +16,7 @@ void solve()
 
     bool flag = true;
 
-    int store = 0;
+    long long store = 0;
     int i = 0;
     int track = n;
 
@@ -24,23 +24,22 @@ void solve()
     {
         a[i] += store;
         store = 0;
-        int x = a[i] - (i + 1);
-        int k = a[i] - x;
+        long long x = a[i] - (i + 1);
 
-        if(k == 0)
+        if(x <= 0)
         {
             i++;
         }
 
         else
         {
-            a[i] = k;
+            a[i] = (i+1);
             store = x;
             i++;
         }
     }
 
-    for (int i = 1; i <=n; i++)
+    for (int i = 1; i < n; i++)
     {
         if (a[i - 1] >= a[i])
         {

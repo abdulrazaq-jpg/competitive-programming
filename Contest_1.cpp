@@ -11,11 +11,11 @@ void solve()
     cin >> s;
 
     int max_length = 0;
-    int length = 1;
+    int length = 0;
 
-    for(int i = 1; i < n ; i++)
+    for(int i = 0; i < n ; i++)
     {
-        if((s[i] == '#') && (s[i-1]=='#'))
+        if(s[i] == '#')
         {
             length++;
             max_length = max(max_length,length);
@@ -23,11 +23,11 @@ void solve()
 
         if(s[i]=='*')
         {
-            length = 1;
+            length = 0;
         }
     }
 
-    int ans = 0;
+    int ans;
 
     if(max_length % 2 == 0)
     {
