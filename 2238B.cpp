@@ -1,4 +1,4 @@
-// New Year Cake
+// Crimsom Triples
 
 #include <iostream>
 #include <vector>
@@ -6,7 +6,17 @@ using namespace std;
 
 void solve()
 {
-    
+    long long n;
+    cin >> n;
+
+    long long ans = 0;
+
+    for(int b = 1; b <= n ; b++)
+    {
+        ans += 1ll * (n/b) * (n/b);
+    }
+
+    cout << ans << "\n";
 }
 
 int main()
@@ -24,3 +34,6 @@ int main()
 
     return 0;
 }
+
+
+// SAW THE EDITORIAL COZ THE PATTERN WAS NEW
