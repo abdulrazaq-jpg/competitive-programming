@@ -1,0 +1,56 @@
+/**
+ * ============================================================================
+ * METHOD: LAZY STATE TRACKING (Implicit Range/Prefix Processing)
+ * ============================================================================
+ * 
+ * CORE IDEA:
+ * Instead of eagerly updating a whole subarray/prefix on every operation, 
+ * leave the array untouched. Iterate in a locked direction (e.g., right-to-left 
+ * or left-to-right) and maintain a running "accumulator" variable of all past 
+ * operations that affect the current index. Compute the element's actual state 
+ * in O(1) on the fly.
+ *
+ * COMPLEXITY:
+ * - Brute Force: O(N^2) (eager propagation loop inside loop)
+ * - Lazy Tracking: O(N) time, O(1) auxiliary space
+ *
+ * WHEN TO USE (ICPC Archetypes):
+ * 1. Directional Constraints: Operations happen strictly in one direction (e.g., 
+ *    "affects all elements to the left/right/below").
+ * 2. Cyclic Operators / Involutions: The operation has a rapid cycle (like parity: 
+ *    XOR, Sign Flips (-1), Bits (0/1 toggles), or cyclic shifts modulo K).
+ * 3. Range Overlaps: Multiple operations cascade over the same indices.
+ *
+ * COMMON ICPC EXTENSIONS:
+ * - 1D Prefix Flips: Maintain an operation counter `c`. Current value state is 
+ *   determined by `c % 2`.
+ * - Difference Arrays: Mark boundaries `D[L] += X` and `D[R+1] -= X`, evaluate 
+ *   with a single prefix-sum sweep at the end.
+ * - Lazy Segment Trees: Store pending operations at tree nodes; defer pushing 
+ *   to children until the child node is explicitly queried/visited.
+ *
+ * MENTAL BLUEPRINT (1D Flip Example):
+ * ============================================================================
+ */
+
+/*
+void solve_lazy_example() {
+    int n; cin >> n;
+    vector<int> a(n);
+    for(int &x : a) cin >> x;
+
+    int lazy_ops = 0; // The state accumulator
+    
+    // Process backwards because a prefix flip at `i` affects [0...i-1]
+    for(int i = n - 1; i >= 0; i--) {
+        // Step 1: Recover current true state using the lazy tracker
+        long long current_val = (lazy_ops % 2 != 0) ? -a[i] : a[i];
+
+        // Step 2: Evaluate condition and lazily trigger next state if needed
+        if(current_val > 0) { 
+            lazy_ops++; // This implicitly flips everything to the left
+            // Record answer/index if required...
+        }
+    }
+}
+*/
