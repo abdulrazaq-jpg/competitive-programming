@@ -22,7 +22,7 @@ void solve()
 
     for(int i = 0; i < 1000; i++)
     {
-        if(arr[i] > max_num)
+        if(arr[i] > arr[max_num])
         {
             max_num = i;
         }
@@ -42,16 +42,19 @@ void solve()
         }
     }
 
-    cout << max_num << "\n";
-    cout << arr[max_num] << "\n";
+    int gap = cnt + 1;
 
-    if(arr[max_num] > cnt)
+    if(arr[max_num] > gap)
     {
-        sum = sum + ((cnt+2) * max_num);
+        sum = sum + ((gap + 1) * max_num);
+    }
+    else if(gap > arr[max_num])
+    {
+        sum = sum + (cnt_max * max_num);
     }
     else
     {
-        sum += arr[max_num];
+        sum = sum + (gap * max_num);
     }
 
     cout << sum << "\n";
