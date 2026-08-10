@@ -1,104 +1,57 @@
-// Domino Tiles
-
 #include <iostream>
+#include <string>
 #include <vector>
+
 using namespace std;
 
-void solve()
-{
-    int n; cin >> n;
+void solve() {
+    int n;
+    cin >> n;
+    string s;
+    cin >> s;
 
-    string s; cin >> s;
+    int valid_count = 0;
 
-    if(n == 2)
-    {
-        if((s[0] != '?' && s[1] == '?') || (s[0] == '?' && s[1] != '?'))
-        {
-            cout << 2 << "\n";
-            return;
-        }
-        
-        cout << 4 << "\n";
-        return;
-    }
+    // Try all 4 initial combinations for (s[0], s[1])
+    for (int start0 = 0; start0 <= 1; start0++) {
+        for (int start1 = 0; start1 <= 1; start1++) {
+            
+            bool possible = true;
 
-    for(int i = 0; i < n-1; i++)
-    {
-        if(s[i] == '1')
-        {
-            if(s[i+2] == '0')
-            {
-                continue;
-            }
-            else if(s[i+2] == '1')
-            {
-                cout << 0 << "\n";
-                return;
-            }
-            else
-            {
-                cout << 1 << "\n";
-                return;
-            }
-        }
+            for (int i = 0; i < n; i++) {
+                int expected_val;
+                if (i % 2 == 0) {
+                    // Odd 1-based positions (0, 2, 4...) alternate starting from start0
+                    expected_val = ((i / 2) % 2 == 0) ? start0 : 1 - start0;
+                } else {
+                    // Even 1-based positions (1, 3, 5...) alternate starting from start1
+                    expected_val = ((i / 2) % 2 == 0) ? start1 : 1 - start1;
+                }
 
-        if(s[i] == '0')
-        {
-            if(s[i+2] == '1')
-            {
-                continue;
-            }
-            else if(s[i+2] == '0')
-            {
-                cout << 0 << "\n";
-                return;
-            }
-            else
-            {
-                cout << 1 << "\n";
-                return;
-            }
-        }
+                char expected_char = expected_val + '0';
 
-        if(s[i] == '?')
-        {
-            if(s[i+1] == '?' && s[i+2] != '?')
-            {
-                cout << 2 << "\n";
-                return;
+                if (s[i] != '?' && s[i] != expected_char) {
+                    possible = false;
+                    break;
+                }
             }
 
-            if(s[i+1] == '?' && s[i+2] == '?')
-            {
-                cout << 4 << "\n";
-                return;
-            }
-
-            if(s[i+1] != '?' && s[i+2] != '?')
-            {
-                cout << 1 << "\n";
-                return;
-            }
-
-            if(s[i+1] != '?' && s[i+2] =='?')
-            {
-                cout << 2 << "\n";
-                return;
+            if (possible) {
+                valid_count++;
             }
         }
     }
+
+    cout << valid_count << "\n";
 }
 
-int main()
-{
+int main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
-    
+
     int t;
     cin >> t;
-
-    while(t--)
-    {
+    while (t--) {
         solve();
     }
 
