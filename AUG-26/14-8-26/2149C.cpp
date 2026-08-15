@@ -14,10 +14,9 @@ void solve()
     int k;
     cin >> k;
 
-    vector<int> missing(n);
-
     int cnt_k = 0;
-    int me = 0;
+
+    vector<int> missing(n+1,0);
 
     for (int i = 0; i < n; i++)
     {
@@ -29,13 +28,21 @@ void solve()
             cnt_k++;
         }
 
-        if(x < k)
+        if(x <= n)
         {
             missing[x]++;
         }
     }
 
-    cout << (cnt_k) << "\n";
+    int cnt = 0;
+    for(int i = 0; i < k; i++)
+    {
+        if(missing[i] == 0)
+        {
+            cnt++;
+        }
+    }
+    cout << max(cnt , cnt_k) << "\n";
 }
 
 int main()
